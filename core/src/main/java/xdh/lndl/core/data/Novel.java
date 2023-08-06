@@ -3,13 +3,12 @@ package xdh.lndl.core.data;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import xdh.lndl.core.persistence.Entity;
 import xdh.lndl.core.content.Image;
+import xdh.lndl.core.persistence.Entity;
 import xdh.lndl.core.source.ref.SourceRef;
 
 /**

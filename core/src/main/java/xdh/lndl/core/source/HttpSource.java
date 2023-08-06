@@ -1,19 +1,18 @@
 package xdh.lndl.core.source;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
 import org.htmlunit.WebClient;
 import org.htmlunit.WebRequest;
 import org.htmlunit.WebResponse;
 import org.htmlunit.html.HtmlPage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import xdh.lndl.core.challenge.ChallengeSolver;
 import xdh.lndl.core.data.Novel;
 import xdh.lndl.core.fetching.WebDriver;
-import xdh.lndl.core.challenge.ChallengeSolver;
 import xdh.lndl.core.source.ref.HttpSourceRef;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Optional;
 
 /**
  * A source for novels based on html.

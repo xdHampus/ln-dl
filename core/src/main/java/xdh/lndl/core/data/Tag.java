@@ -1,11 +1,9 @@
 package xdh.lndl.core.data;
 
+import java.util.UUID;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import xdh.lndl.core.persistence.Entity;
-
-import java.util.UUID;
 
 /**
  * Any tag that can be related to a novel.

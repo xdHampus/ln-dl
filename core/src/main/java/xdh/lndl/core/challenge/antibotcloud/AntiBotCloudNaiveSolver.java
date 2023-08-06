@@ -7,9 +7,9 @@ import org.htmlunit.WebClient;
 import org.htmlunit.WebResponse;
 import org.htmlunit.html.HtmlImage;
 import org.htmlunit.html.HtmlPage;
+import xdh.lndl.core.challenge.ChallengeFailedException;
 import xdh.lndl.core.challenge.ChallengeSolver;
 import xdh.lndl.core.fetching.WebDriver;
-import xdh.lndl.core.challenge.ChallengeFailedException;
 
 /**
  * Naive AntiBotCloud solver for large screens.

@@ -1,12 +1,11 @@
 package xdh.lndl.core.data;
 
+import java.util.UUID;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import xdh.lndl.core.persistence.Entity;
 import xdh.lndl.core.content.ChapterContent;
+import xdh.lndl.core.persistence.Entity;
 import xdh.lndl.core.source.ref.SourceRef;
-
-import java.util.UUID;
 
 /**
  * Novel chapter.

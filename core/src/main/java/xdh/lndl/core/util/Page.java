@@ -1,9 +1,7 @@
 package xdh.lndl.core.util;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class Page<T> {

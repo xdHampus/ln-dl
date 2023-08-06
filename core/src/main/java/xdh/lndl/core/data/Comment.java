@@ -3,11 +3,9 @@ package xdh.lndl.core.data;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import xdh.lndl.core.persistence.Entity;
-
 
 /**
  * Comment attached to novel or chapter.
