@@ -2,13 +2,17 @@ package xdh.lndl.cli.command;
 
 import java.util.List;
 import java.util.ServiceLoader;
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
 import xdh.lndl.core.source.Source;
 
 /** Source command. */
 @Command(name = "source", description = "Deals with available source")
 public class SourceCommand implements Runnable {
+  @Spec CommandSpec spec;
 
   @Option(names = {"-a", "--all"})
   private boolean allSources;
@@ -21,9 +25,10 @@ public class SourceCommand implements Runnable {
     if (allSources) {
       System.out.println("Sources:");
       services.forEach(source -> printSource(source, 1));
+      return;
     }
 
-
+    throw new CommandLine.ParameterException(spec.commandLine(), "Missing action");
   }
 
   private void printSource(Source source, int depth) {
