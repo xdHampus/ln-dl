@@ -1,5 +1,6 @@
 package xdh.lndl.core.data;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,5 +45,5 @@ public final class Novel implements Entity {
   private List<Volume> volumes;
   private List<Novel> recommendations;
   private List<Novel> related;
-
+  private Instant updatedDate;
 }

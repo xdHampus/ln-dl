@@ -17,3 +17,8 @@ Useful commands:
 * `mvn test -Pintegration-test` Run integration tests
 * `mvn clean checkstyle:check -Pcode-linter` Run linter
 * `mvn clean verify -Pcode-analysis -Dmaven.test.skip` Run code analysis
+
+
+
+### Notes: 
+ * Use selenium instead of htmlunit to make it easier to solve challenges & store headers/cookies

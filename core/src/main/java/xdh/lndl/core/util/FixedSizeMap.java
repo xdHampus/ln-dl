@@ -9,8 +9,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Map that only retains a number of elements. Acts as a FIFO queue.
  *
- * @param <K> key
- * @param <V> value
+ * @param <K> map key
+ * @param <V> map value
  */
 public final class FixedSizeMap<K, V> {
   private final Queue<K> queue = new ConcurrentLinkedQueue<>();
@@ -37,6 +37,8 @@ public final class FixedSizeMap<K, V> {
    */
   public void put(K key, V value) {
     if (map.containsKey(key)) {
+      queue.remove(key);
+      queue.add(key);
       return;
     }
 

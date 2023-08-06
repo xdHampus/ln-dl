@@ -2,7 +2,7 @@ package xdh.lndl.core.source.query;
 
 import xdh.lndl.core.data.Novel;
 
-import java.awt.print.Pageable;
+import xdh.lndl.core.util.Pageable;
 import java.util.List;
 
 /**

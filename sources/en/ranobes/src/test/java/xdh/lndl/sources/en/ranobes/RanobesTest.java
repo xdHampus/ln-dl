@@ -1,7 +1,14 @@
 package xdh.lndl.sources.en.ranobes;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.Optional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -15,22 +22,24 @@ import xdh.lndl.core.data.Novel;
 import xdh.lndl.core.data.NovelTitle;
 import xdh.lndl.core.data.ReleaseStatus;
 import xdh.lndl.core.source.ref.BasicHttpSourceRef;
-import xdh.lndl.core.source.ref.SourceRef;
-
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.util.List;
-import java.util.Optional;
+import xdh.lndl.core.util.Pageable;
 
 class RanobesTest {
 
-  private static final String example1FileName = "ranobes-page/example-1.html";
-  private static final Document example1;
-  
+  private static final Document novelPageFile;
+  private static final Document latestNovelsFile;
+
   static {
-    example1 = Jsoup.parse(StaticHelper.readFileAsString(RanobesTest.class.getClassLoader(), example1FileName));
+    novelPageFile =
+        Jsoup.parse(
+            StaticHelper.readFileAsString(
+                    RanobesTest.class.getClassLoader(),
+                    "ranobes-page/novel-page.html"));
+    latestNovelsFile =
+            Jsoup.parse(
+                    StaticHelper.readFileAsString(
+                            RanobesTest.class.getClassLoader(),
+                            "ranobes-page/latest-updates.html"));
   }
 
   private Ranobes ranobes;
@@ -43,9 +52,8 @@ class RanobesTest {
   @Test
   @Disabled
   void getNovelBySourceRef() throws IOException {
-    final var novelRef = BasicHttpSourceRef.<Novel>builder()
-            .path("39616-swallowed-star-v812312.html")
-            .build();
+    final var novelRef =
+        BasicHttpSourceRef.<Novel>builder().path("39616-swallowed-star-v812312.html").build();
 
     final var novel = ranobes.getNovelBySourceRef(novelRef);
 
@@ -63,16 +71,16 @@ class RanobesTest {
 
     @Test
     void parseNovelTitle() {
-      NovelTitle expectedTitle = NovelTitle.builder()
+      NovelTitle expectedTitle =
+          NovelTitle.builder()
               .title("Swallowed Star")
               .alternativeTitles(List.of("吞噬星空", "Tun Shi Xing Kong"))
               .build();
 
-      Novel novel = ranobes.parseNovelTitle(builder, example1).build();
+      Novel novel = ranobes.parseNovelTitle(builder, novelPageFile).build();
 
       assertEquals(expectedTitle, novel.getTitle());
     }
-
 
     @Nested
     class MetaElementsTests {
@@ -81,7 +89,7 @@ class RanobesTest {
 
       @BeforeEach
       void setUp() {
-        Optional<Elements> metaElementsOpt = ranobes.getMetaElements(example1);
+        Optional<Elements> metaElementsOpt = ranobes.getMetaElements(novelPageFile);
         assertTrue(metaElementsOpt.isPresent());
         metaElements = metaElementsOpt.get();
       }
@@ -105,15 +113,15 @@ class RanobesTest {
       @Test
       void parseAuthors() {
         List<Author> expectedAuthors =
-                List.of(
-                        Author.builder()
-                                .name("I Eat Tomatoes")
-                                .sourceRef(
-                                        BasicHttpSourceRef.<Author>builder()
-                                                .sourceId(ranobes.getSourceId())
-                                                .path("https://ranobes.top/tags/authors/I%20Eat%20Tomatoes/")
-                                                .build())
-                                .build());
+            List.of(
+                Author.builder()
+                    .name("I Eat Tomatoes")
+                    .sourceRef(
+                        BasicHttpSourceRef.<Author>builder()
+                            .sourceId(ranobes.getSourceId())
+                            .path("https://ranobes.top/tags/authors/I%20Eat%20Tomatoes/")
+                            .build())
+                    .build());
 
         Novel novel = ranobes.parseAuthors(builder, metaElements).build();
 
@@ -127,13 +135,27 @@ class RanobesTest {
         assertNotNull(novel.getPublishingDetails());
         assertEquals(List.of("Qidian", "Webnovel"), novel.getPublishingDetails().getPublishers());
         assertEquals(
-                LocalDate.ofYearDay(Integer.parseInt("2010"), 1)
-                        .atStartOfDay()
-                        .toInstant(ZoneOffset.UTC),
-                novel.getPublishingDetails().getPublishingDate()
-        );
+            LocalDate.ofYearDay(Integer.parseInt("2010"), 1)
+                .atStartOfDay()
+                .toInstant(ZoneOffset.UTC),
+            novel.getPublishingDetails().getPublishingDate());
       }
+    }
+  }
 
+  @Nested
+  class FindLatest {
+
+    @Test
+    void parseLatestNovelsReal() throws IOException {
+      var page = new Pageable();
+      page.setPage(2);
+      var wtf = ranobes.getLatestNovels(page);
+      var dam = wtf.getElements().size();
+    }
+    @Test
+    void parseLatestNovels() {
+      var wtf = ranobes.parseLatestNovels(latestNovelsFile);
     }
 
   }

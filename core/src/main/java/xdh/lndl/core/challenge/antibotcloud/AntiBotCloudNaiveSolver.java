@@ -1,4 +1,4 @@
-package xdh.lndl.core.fetching.challenge.antibotcloud;
+package xdh.lndl.core.challenge.antibotcloud;
 
 import jakarta.validation.constraints.NotNull;
 import java.io.IOException;
@@ -7,9 +7,9 @@ import org.htmlunit.WebClient;
 import org.htmlunit.WebResponse;
 import org.htmlunit.html.HtmlImage;
 import org.htmlunit.html.HtmlPage;
+import xdh.lndl.core.challenge.ChallengeSolver;
 import xdh.lndl.core.fetching.WebDriver;
-import xdh.lndl.core.fetching.challenge.ChallengeFailedException;
-import xdh.lndl.core.fetching.challenge.ChallengeSolver;
+import xdh.lndl.core.challenge.ChallengeFailedException;
 
 /**
  * Naive AntiBotCloud solver for large screens.
@@ -35,9 +35,13 @@ public class AntiBotCloudNaiveSolver extends ChallengeSolver {
       throws ChallengeFailedException, IOException {
     boolean javaScriptEnabled = client.getOptions().isJavaScriptEnabled();
     client.getOptions().setJavaScriptEnabled(true);
+    client.getOptions().setDownloadImages(true);
+    client.getOptions().setCssEnabled(true);
+    client.getOptions().setWebSocketEnabled(true);
+    client.getOptions().setActiveXNative(true);
 
     HtmlPage page = client.getPage(path);
-    client.waitForBackgroundJavaScript(javascriptWaitTime);
+    client.waitForBackgroundJavaScript(javascriptWaitTime * 10);
 
     try {
       page = trySolve(client, page, 0);
@@ -62,6 +66,7 @@ public class AntiBotCloudNaiveSolver extends ChallengeSolver {
   private HtmlPage trySolve(WebClient wc, HtmlPage page, int retryCount)
       throws IOException, ChallengeFailedException {
 
+    var content = page.getPage().asXml();
     HtmlImage image = page.querySelector(firstImageOptionSelector);
     if (image == null) {
       return page;

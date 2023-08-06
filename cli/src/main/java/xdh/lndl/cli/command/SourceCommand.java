@@ -1,8 +1,7 @@
 package xdh.lndl.cli.command;
 
-import java.util.ServiceLoader;
 import java.util.List;
-
+import java.util.ServiceLoader;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import xdh.lndl.core.source.Source;
@@ -22,7 +21,6 @@ public class SourceCommand implements Runnable {
     if (allSources) {
       System.out.println("Sources:");
       services.forEach(source -> printSource(source, 1));
-      return;
     }
 
 

@@ -1,13 +1,13 @@
 package xdh.lndl.cli.command;
 
-import picocli.AutoComplete;
-import picocli.CommandLine.ParameterException;
-import picocli.CommandLine.Spec;
+import static picocli.AutoComplete.GenerateCompletion;
+
+import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Command;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Spec;
 import xdh.lndl.cli.App;
-import static picocli.AutoComplete.GenerateCompletion;
 
 /**
  * ln-dl cli.

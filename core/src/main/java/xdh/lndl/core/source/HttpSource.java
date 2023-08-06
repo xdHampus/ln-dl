@@ -6,10 +6,9 @@ import org.htmlunit.WebResponse;
 import org.htmlunit.html.HtmlPage;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import xdh.lndl.core.data.Chapter;
 import xdh.lndl.core.data.Novel;
 import xdh.lndl.core.fetching.WebDriver;
-import xdh.lndl.core.fetching.challenge.ChallengeSolver;
+import xdh.lndl.core.challenge.ChallengeSolver;
 import xdh.lndl.core.source.ref.HttpSourceRef;
 
 import java.io.IOException;
@@ -27,6 +26,7 @@ public abstract class HttpSource implements Source {
 
   protected abstract ChallengeSolver getChallengeSolver();
 
+  public abstract String getNovelUrl(HttpSourceRef<Novel> novelRef);
 
   protected Optional<Document> fetchPage(String path) throws IOException {
     final URL url = new URL(getBaseUrl() + path);
