@@ -1,1 +1,0 @@
-let dleSearchConfig={ajax:0,maximunNews:10,ajaxCategory:0,ajaxTags:0,ajaxXfield:0,url:1,page:window.location.pathname};
